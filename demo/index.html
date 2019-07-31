@@ -34,12 +34,26 @@
             <input type="text" name="limit-input" id="limit-input" value="5"><br>
             <label for="new-task-input">New task</label><br>
             <input type="text" name="new-task-input" id="new-task-input"><br>
+            <label for="update-input">Id to update</label><br>
+            <input type="text" name="update-input" id="update-input"><br>
           </div>
           <script>
               const repo = document.getElementById('task-repo');
               const inputOffset = document.getElementById('offset-input');
               const inputLimit = document.getElementById('limit-input');
               const inputNewTask = document.getElementById('new-task-input');
+              const inputUpdate = document.getElementById('update-input');
+
+              inputUpdate.addEventListener('blur', (event) => {
+                const task = {
+                  id: Number(event.target.value),
+                  title: 'Task updated',
+                  canceled: false,
+                  done: false
+                }
+
+                repo.updateTask = task;
+              });
 
               inputNewTask.addEventListener('blur', (event) => {
                 const newTask = {
@@ -68,7 +82,10 @@
                 } else {
                   repo.getPage(repo.offset, repo.limit);
                 }
-              })
+              });
+              repo.addEventListener('update-task', (event) => {
+                repo.getPage(repo.offset, repo.limit);
+              });
             </script>
         </template>
       </demo-snippet>

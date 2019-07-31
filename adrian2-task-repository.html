@@ -19,6 +19,10 @@
           newTask: {
             type: Object,
             observer: 'createTask'
+          },
+          updateTask: {
+            type: Object,
+            observer: 'changeTask'
           }
         };
       }
@@ -152,6 +156,23 @@
             done: false
           }
         ];
+      }
+
+      changeTask (task) {
+        let taskToUpdate = this.taskList.filter(
+          (stateTask) => stateTask.id === task.id
+        )[0];
+        const customEvent = new CustomEvent(
+          'update-task',
+          {
+            bubbles: true,
+            composed: true
+          }
+        );
+
+        taskToUpdate = Object.assign(taskToUpdate, task);
+
+        setTimeout(() => { this.dispatchEvent(customEvent); }, 300);
       }
 
       createTask (task) {
