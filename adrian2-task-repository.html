@@ -19,6 +19,10 @@
         };
       }
 
+      static get observers() {
+        return ['getPage(offset, limit)']
+      }
+
       constructor() {
         super();
 
@@ -146,14 +150,14 @@
         ];
       }
 
-      getPage() {
+      getPage(offset, limit) {
         const details = {
           total: this.taskList.length,
-          offset: this.offset,
-          limit: this.limit
+          offset: offset,
+          limit: limit
         }
-        const start = this.offset;
-        const end = this.offset + this.limit;
+        const start = offset;
+        const end = offset + limit;
 
         let customEvent;
 
